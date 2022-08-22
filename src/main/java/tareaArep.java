@@ -13,6 +13,13 @@ public class tareaArep {
             res.type("application/json");
             return HttpConnectionExample.getAPIAdvantageIntraDay();
         });
+        path("/find", ()->{
+            get("/:value",(req,res) ->{
+                res.type("application/json");
+                return HttpConnectionExample.getAPIData(req.params(":value"));
+            });
+        });
+
     }
     static int getPort(){
         if(System.getenv("PORT")!= null){

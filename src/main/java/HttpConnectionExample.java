@@ -41,5 +41,35 @@ public class HttpConnectionExample {
         System.out.println("GET DONE");
         return "{Error}";
     }
+    public static String getAPIData(String symbol) throws IOException {
+        String apiURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + symbol + "&apikey=demo";
+        URL obj = new URL(apiURL);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("User-Agent", USER_AGENT);
 
+        //The following invocation perform the connection implicitly before getting the code
+        int responseCode = con.getResponseCode();
+        System.out.println("GET Response Code :: " + responseCode);
+
+        if (responseCode == HttpURLConnection.HTTP_OK) { // success
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // print result
+            System.out.println(response.toString());
+            return response.toString();
+        } else {
+            System.out.println("GET request not worked");
+        }
+        System.out.println("GET DONE");
+        return "{Error}";
+    }
 } 
